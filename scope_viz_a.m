@@ -5,6 +5,8 @@
 close all; clear; clc;
 
 % options
+doSaveVizPlots = 1;
+doMakeVideo = 1;
 dt = 0.1;            % [sec] resampling time interval
 movAvgWindow = 2*60; % [sec] width of moving average filter
 true_fields = {'case_id','gender','laterality','approach','track_file','scope_tool_id','t_end_exp','t_end_loc','t_end_isc','t_undock'};
@@ -151,6 +153,21 @@ for caseIdx = 1:length(param_filenames)
     ylabel('\bfScope Visibility');
     xlim([0,200]);
     drawnow;
+    
+    % save plot if desired
+    if(doSaveVizPlots)
+        thisImgFile = sprintf('frame%03d.png',caseIdx);
+        saveas(gcf,thisImgFile);
+        system(['convert -trim ' thisImgFile ' ' thisImgFile]);  % REQUIRES convert FROM IMAGEMAGICK!
+    end
+    
+end
+
+
+% compile animation
+if(doSaveVizPlots && doMakeVideo)
+    system(['ffmpeg -y -r 1 -start_number 1 -i frame%003d.png -vf scale="trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -profile:v high -pix_fmt yuv420p -g 25 -r 25 scope_viz.mp4']);
+%     system('del frame*.png');
 end
 
 % % % phaseVizA = [
