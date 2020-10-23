@@ -24,6 +24,7 @@ param_filenames = { ...
     '/31584-009/tracker/31584-009-tracker-params.txt';
     '/31584-010/tracker/31584-010-tracker-params.txt';
     '/31584-011/tracker/31584-011-tracker-params.txt';
+    '/31584-012/tracker/31584-012-tracker-params.txt';
     };
 
 % define phases and set colors
