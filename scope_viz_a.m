@@ -185,11 +185,21 @@ end
 % % %    26.6200    9.4800   16.7500   48.7872];
 
 %% statistics
+
+% duration of exposure phase
 x = phaseDur(:,1);
 sem_x = std(x)/sqrt(length(x));
 ci_low = mean(x) -sem_x*tinv(0.975,length(x)-1);
 ci_high = mean(x) + sem_x*tinv(0.975,length(x)-1);
 fprintf('Exposure duration: %03.1f min (95%% CI: %03.1f, %03.1f)\n',mean(x),ci_low,ci_high);
+
+% overall duration of robotic part of procedure
+x = sum(phaseDur,2);
+sem_x = std(x)/sqrt(length(x));
+ci_low = mean(x) -sem_x*tinv(0.975,length(x)-1);
+ci_high = mean(x) + sem_x*tinv(0.975,length(x)-1);
+fprintf('Mean Robot Minutes: %03.1f min (95%% CI: %03.1f, %03.1f)\n',mean(x),ci_low,ci_high);
+fprintf('Robot Minutes Median & Range: %03.1f min (%03.1f, %03.1f)\n',median(x),min(x),max(x));
 
 x = phaseViz(:,1);
 sem_x = std(x)/sqrt(length(x));
