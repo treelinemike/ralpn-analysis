@@ -12,7 +12,7 @@ close all; clear; clc;
 % options
 base_path = 'S:/eit/mak/20210811-phantom-ct/'; % path to where the segmented STL files are located...
 doAnimate = 1;   % animate on the screen?
-doMakeVideo = 1; % set to 1 to produce a video file; requires imagemagick ('convert') and ffmpeg
+doMakeVideo = 0; % set to 1 to produce a video file; requires imagemagick ('convert') and ffmpeg
 videoFileName = 'phantom_align_';
 videoFrameRate = 6; % [frames/sec]
 
