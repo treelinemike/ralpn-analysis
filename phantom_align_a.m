@@ -1,7 +1,6 @@
 % Compare phantom anatomy across multiple scans
 % Display/animate overlay in 3D
 % Also compute centroid displacements
-% Reference rigid registration via the SVD: https://igl.ethz.ch/projects/ARAP/svd_rot.pdf
 %
 % Author: M. Kokko
 % Updated: 18-Aug-2021
@@ -64,35 +63,14 @@ anat_disp = zeros(size(fiducial_positions,3),size(fiducial_positions,2));
 % perform registration
 for moving_idx = 2:3
     
-    % center fixed points
+    % fixed points
     q = fiducial_positions(:,:,1);
-    q_bar = mean(fiducial_positions(:,:,1),2);
-    Y = q - q_bar;
     
-    % center moving points
+    % moving points
     p = fiducial_positions(:,:,moving_idx);
-    p_bar = mean(fiducial_positions(:,:,moving_idx),2);
-    X = p - p_bar;
     
-    % compute covariance matrix
-    W = eye(size(Y,2)); % identity weighting matrix
-    S = X*W*Y';
-    
-    % compute SVD
-    [U,~,V] = svd(S);
-    
-    % compute homogeneous transformation matrix
-    W2 = eye(size(U));
-    W2(end,end) = det(V*U');
-    R = V*W2*U';
-    t = q_bar - R*p_bar;
-    TF = [R, t; zeros(1,3), 1];
-
-    % transform and compute residual RMSE (ie. fiducial registration error)
-    p2 = hTF(p,TF,0);
-    mse = mean(vecnorm(q-p2).^2);
-    fre = sqrt(mse)
-
+    [p2,TF,fre] = rigid_align_svd(p,q);
+   
     % create figure and load original anatomy
     figure;
     set(gcf,'Position',[0488 1.242000e+02 6.634000e+02 6.378000e+02]);
