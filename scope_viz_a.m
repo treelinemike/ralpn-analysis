@@ -11,7 +11,7 @@ dt = 0.1;            % [sec] resampling time interval
 movAvgWindow = 2*60; % [sec] width of moving average filter
 true_fields = {'case_id','gender','laterality','approach','track_file','scope_tool_id','t_end_exp','t_end_loc','t_end_isc','t_undock'};
 base_path = 'S:/eit/mak/RALPN-D19002-31584';
-% base_path = 'C:/Users/f002r5k/Dropbox/projects/surg_nav/nccc_pilot';
+% base_path = 'C:/Users/f002r5k/Dropbby ox/projects/surg_nav/nccc_pilot';
 param_filenames = { ...
     '/31584-001/tracker/31584-001-tracker-params.txt';
     '/31584-002/tracker/31584-002-tracker-params.txt';

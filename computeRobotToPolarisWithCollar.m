@@ -68,7 +68,7 @@ if(useCaptureNoteList)
     polaris_sec(~captureNoteMask,:) = [];
 end
 
-% for each collar observation find the closest kinematic 
+% for each collar observation find the closest ECM kinematic datapoint
 cal_kinpts = nan(3,size(subtab,1));
 cal_TF = nan(4,4,size(subtab,1));
 actual_ecm_sec = nan(size(polaris_sec));
@@ -105,23 +105,23 @@ b = [10 10 10 10 -400 800];
 rmse = finalRMSE;
 TF_robot_to_polaris = finalTF;
 
-% % display results for debugging
-% figure; 
-% hold on; grid on; axis equal;
-% cal_kinpts_polaris_frame = hTF(cal_kinpts,finalTF,0);
-% ph_kinematics = plot3(cal_kinpts_polaris_frame(1,:),cal_kinpts_polaris_frame(2,:),cal_kinpts_polaris_frame(3,:),'o','MarkerSize',10,'LineWidth',2,'Color',[0.8 0 0.8]);
-% cal_colpts = [];
-% for i = 1:size(cal_TF,3)
-%     tippt = hTF(x_opt,cal_TF(:,:,i),0);
-%     %     plot3(tippt(1),tippt(2),tippt(3),'-','LineWidth',2,'MarkerSize',5,'Color',[0.8 0 0]);
-%     cal_colpts(:,end+1) = tippt;
-% end
-% ph_polaris = plot3(cal_colpts(1,:),cal_colpts(2,:),cal_colpts(3,:),'.','MarkerSize',30,'Color',[0 0 0.8]);
-% view([-81,16.4]);
-% xlim([-320,-50]);
-% ylim([-120,80]);
-% zlim([-2280,-2080]);
-% legend([ph_polaris,ph_kinematics],{'Polaris','Kinematics'});
+% display results for debugging
+figure; 
+hold on; grid on; axis equal;
+cal_kinpts_polaris_frame = hTF(cal_kinpts,finalTF,0);
+ph_kinematics = plot3(cal_kinpts_polaris_frame(1,:),cal_kinpts_polaris_frame(2,:),cal_kinpts_polaris_frame(3,:),'o','MarkerSize',10,'LineWidth',2,'Color',[0.8 0 0.8]);
+cal_colpts = [];
+for i = 1:size(cal_TF,3)
+    tippt = hTF(x_opt,cal_TF(:,:,i),0);
+    %     plot3(tippt(1),tippt(2),tippt(3),'-','LineWidth',2,'MarkerSize',5,'Color',[0.8 0 0]);
+    cal_colpts(:,end+1) = tippt;
+end
+ph_polaris = plot3(cal_colpts(1,:),cal_colpts(2,:),cal_colpts(3,:),'.','MarkerSize',30,'Color',[0 0 0.8]);
+view([-81,16.4]);
+xlim([-320,-50]);
+ylim([-120,80]);
+zlim([-2280,-2080]);
+legend([ph_polaris,ph_kinematics],{'Polaris','Kinematics'});
 end
 
 
